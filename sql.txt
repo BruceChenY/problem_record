@@ -1,0 +1,170 @@
+/*
+用户表
+增加控制工时锁死权限
+*/
+create table problem.user_a
+(
+id int not null primary key auto_increment,
+name varchar(10),
+password varchar(60),
+cardnum varchar(30),
+partment varchar(30)
+)
+
+/*
+问题记录主表
+*/
+create table problem.problem_record
+(
+id int not null primary key auto_increment,
+main_model varchar(100),
+project_id varchar(10),
+model varchar(100),
+batch_num varchar(45),
+project_count int,
+person varchar(10),
+happen_time datetime,
+descript varchar(500),
+commit_time datetime(),
+flow_num varcar(20),
+plan_state varchar(10),
+solve_state varchar(10),
+duty_person varchar(10),
+duty_person2 varchar(10),
+finish_state varchar(10),
+problem_type varchar(45)
+)
+
+/*
+问题分析表
+*/
+create table problem.analysis
+(
+id int not null primary key auto_increment,
+problem_id int,
+result varchar(500),
+result_state varchar(10),
+commit_time datetime()
+)
+
+/*
+问题分析人表，问题分析表与该表为一对多的关系
+*/
+create table problem.analysis_person
+(
+id int not null primary key auto_increment,
+analysis_id int,
+confirm_person varchar(10)
+)
+
+/*
+问题分析质检部确认人表，问题分析表与该表为一对多的关系
+*/
+create table problem.analysis_person_quality
+(
+id int not null primary key auto_increment,
+analysis_id int,
+confirm_person varchar(10),
+confirm_time datetime
+)
+
+/*
+问题分析责任部门表，问题分析表与该表为一对多的关系
+*/
+create table problem.analysis_duty
+(
+id int not null primary key auto_increment,
+analysis_id int,
+partment varchar(20)
+)
+
+/*
+解决方案表，问题记录表与该表为一对多的关系
+*/
+create table problem.solve_plan
+(
+id int not null primary key auto_increment,
+problem_id int,
+solve varchar(500),
+material_state varchar(10),
+way_state varchar(10),
+split_way varchar(500),
+confirm_time datetime,
+plan_state varchar(10),
+crafts_state varchar(10),
+crafts_content varchar(500),
+crafts_person varchar(10)
+)
+
+/*
+方案给出人，解决方案表与该表为一对多的关系
+*/
+create table problem.solve_person
+(
+id int not null primary key auto_increment,
+plan_id int,
+confirm_person varchar(10)
+)
+
+/*
+解决方案物料变更表，解决方案表与该表为一对多的关系
+*/
+create table problem.solve_material
+(
+id int not null primary key auto_increment,
+plan_id int,
+operate_type varchar(10),
+material_num varchar(10),
+material_name varchar(100),
+material_model varchar(100),
+material_count varchar(30),
+partment varchar(20),
+confirm_person varchar(10)
+)
+
+/*
+影响工时表，问题记录表与该表为一对多的关系
+*/
+create table problem.work_hour
+(
+id int not null primary key auto_increment,
+problem_id int,
+line_name varchar(20),
+workhour_manage int,
+workhour_technology int,
+workhour_operate int,
+confirm_person varchar(10),
+effect_date date,
+confirm_time datetime
+)
+
+/*
+备注信息表，问题记录表与该表为一对多的关系
+*/
+create table problem.track_record
+(
+id int not null primary key auto_increment,
+problem_id int,
+descript varchar(500),
+confirm_person varchar(10),
+confirm_time datetime
+)
+
+/*
+版本控制
+*/
+create table problem.version_control
+(
+id int not null primary key auto_increment,
+version_num_l varchar(10),
+version_num_h varchar(10)
+)
+
+/*
+问题完结
+*/
+create table problem.finish_person
+(
+id int not null primary key auto_increment,
+name varchar(10)
+)
